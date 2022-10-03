@@ -13,3 +13,9 @@
 - Paste the link in. (this will copy it down.)
 - `cd` into that directory and run `npm i` (to install the node modules).
 - Open in Code and PARTY!
+
+## Stuff for Tuesday
+
+- [ ] `unknown`
+- [ ] `interface` vs `type`
+- [ ] stubbing our dependencies

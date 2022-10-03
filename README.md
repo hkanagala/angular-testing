@@ -10,6 +10,6 @@
 - Click the Code button
 - Copy the link it gives you.
 - Go to a terminal/command prompt and navigate to your `~\dev` directory.
-- Paste the link in.
+- Paste the link in. (this will copy it down.)
 - `cd` into that directory and run `npm i` (to install the node modules).
 - Open in Code and PARTY!

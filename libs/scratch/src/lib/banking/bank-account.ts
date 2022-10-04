@@ -7,33 +7,41 @@ export class BankAccount {
     return this._balance;
   }
 
-  getLastTransaction(): Transaction | undefined {
+  getLastTransaction(): Readonly<Transaction> | undefined {
     return this._transactions[0];
   }
-  deposit(amount: number): void {
-    const newBalance = this._balance + amount;
-    const tx: Transaction = {
-      id: 'TX' + v4(),
-      amountOfTransaction: amount,
-      balanceBeforeTransaction: this._balance,
-      balanceAfterTransaction: newBalance,
-      type: 'deposit',
-      posted: new Date().toISOString(),
-    };
-    this._balance = newBalance;
-    this._transactions = [tx, ...this._transactions];
+  deposit(amountOfTransaction: number): void {
+    this.applyTransaction(
+      this.calculateTransaction({ type: 'deposit', amountOfTransaction })
+    );
   }
-  withdraw(amount: number): void {
-    const newBalance = this._balance - amount;
-    const tx: Transaction = {
+  withdraw(amountOfTransaction: number): void {
+    this.applyTransaction(
+      this.calculateTransaction({ type: 'withdrawal', amountOfTransaction })
+    );
+  }
+  private calculateTransaction(tx: BankTransaction): Transaction {
+    const balanceAfterTransaction = this.calculateTransactionImpact(tx);
+    const response: Transaction = {
+      ...tx,
       id: 'TX' + v4(),
-      amountOfTransaction: amount,
       balanceBeforeTransaction: this._balance,
-      balanceAfterTransaction: newBalance,
-      type: 'withdrawal',
+      balanceAfterTransaction,
       posted: new Date().toISOString(),
     };
-    this._balance = newBalance;
+    return response;
+  }
+  private calculateTransactionImpact(tx: BankTransaction): number {
+    switch (tx.type) {
+      case 'deposit':
+        return this._balance + tx.amountOfTransaction;
+      case 'withdrawal':
+        return this.balance - tx.amountOfTransaction;
+    }
+  }
+
+  private applyTransaction(tx: Transaction) {
+    this._balance = tx.balanceAfterTransaction;
     this._transactions = [tx, ...this._transactions];
   }
 }
@@ -44,11 +52,14 @@ interface NameInfo {
   mi?: string;
 }
 
-export interface Transaction {
-  readonly id: string;
-  readonly type: 'deposit' | 'withdrawal';
-  readonly amountOfTransaction: number;
-  readonly balanceBeforeTransaction: number;
-  readonly balanceAfterTransaction: number;
-  readonly posted: string; // An ISO-8601 string of the date and time of the transaction
-}
+type BankTransaction = {
+  type: 'deposit' | 'withdrawal';
+  amountOfTransaction: number;
+};
+
+export type Transaction = BankTransaction & {
+  id: string;
+  balanceBeforeTransaction: number;
+  balanceAfterTransaction: number;
+  posted: string; // An ISO-8601 string of the date and time of the transaction
+};

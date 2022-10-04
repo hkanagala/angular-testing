@@ -70,6 +70,7 @@ describe('The Bank Account', () => {
       account.deposit(amountOfDeposit);
       // then
       const tx = account.getLastTransaction();
+
       const expected: Transaction = {
         id: 'TX867-5309',
         type: 'deposit',

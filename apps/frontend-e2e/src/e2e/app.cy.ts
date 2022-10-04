@@ -9,6 +9,10 @@ describe('frontend', () => {
         expect(loc.port).to.eq('4200');
       });
     });
+    it('ensuring home is a catchall', () => {
+      cy.visit('tacosaladrabbitnose');
+      cy.url().should('match', /\/home$/);
+    });
     it('Updates the location', () => {
       cy.url().should('match', /\/home$/); // at the end of the url ($), there should be a '/' (\/) followed by 'home'
     });

@@ -7,6 +7,9 @@ describe('frontend', () => {
         expect(loc.pathname).to.eq('/home');
         expect(loc.href).to.eq('http://localhost:4200/home');
         expect(loc.port).to.eq('4200');
+        // https://localhost:4200/home?country=USA
+        // https: Scheme [http|https] (protocol)
+        expect(loc.protocol).to.eq('http:');
       });
     });
     it('ensuring home is a catchall', () => {

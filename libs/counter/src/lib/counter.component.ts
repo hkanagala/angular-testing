@@ -5,8 +5,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.css'],
 })
-export class CounterComponent implements OnInit {
-  constructor() {}
+export class CounterComponent {
+  current = 0;
 
-  ngOnInit(): void {}
+  increment() {
+    this.current++;
+  }
+
+  decrement() {
+    this.current--;
+  }
 }

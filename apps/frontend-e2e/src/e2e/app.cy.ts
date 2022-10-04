@@ -2,6 +2,13 @@ describe('frontend', () => {
   beforeEach(() => cy.visit('/'));
 
   describe('Routing Defaults', () => {
+    it('Using the Location Thing I screwed up Earlier', () => {
+      cy.location().should((loc) => {
+        expect(loc.pathname).to.eq('/home');
+        expect(loc.href).to.eq('http://localhost:4200/home');
+        expect(loc.port).to.eq('4200');
+      });
+    });
     it('Updates the location', () => {
       cy.url().should('match', /\/home$/); // at the end of the url ($), there should be a '/' (\/) followed by 'home'
     });
